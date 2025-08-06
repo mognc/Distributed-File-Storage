@@ -1,0 +1,20 @@
+services:
+  distributed_file_system:
+    build:
+      context: ./DistributedFileSystem
+    restart: unless-stopped
+    ports:
+      - "8084:8084"
+    volumes:
+      - ./DistributedFileSystem:/app
+      - /app/tmp
+      - /app/.air.toml
+    environment:
+      - GO_ENV=development
+      - PORT=8084
+    networks:
+      - distributed-network
+
+networks:
+  distributed-network:
+    driver: bridge
